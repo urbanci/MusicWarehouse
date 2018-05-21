@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">MusicWarehouse</string>
+    <string name="insert_warehouse">New Warehouse</string>
+    <string name="insert_item">New Item</string>
+    <string name="insert">INSERT</string>
+
+    <!--INSERTS-->
+
+        <!--warehouse-->
+        <string name="insert_name">Name: </string>
+        <string name="insert_address">Address: </string>
+        <string name="insert_town">Town: </string>
+        <string name="insert_country">Country: </string>
+        <string name="insert_capacity">Capacity: </string>
+
+        <!--item-->
+        <string name="insert_firm">Country: </string>
+        <string name="insert_price">Price: </string>
+        <string name="insert_quantity">Quantity: </string>
+        <string name="insert_items_num">Items send here: </string>
+
+        <!--warehouse_item-->
+        <string name="insert_warehouse_item">Arrange all the items available</string>
+        <string name="items_available">Items left: </string>
+
+    <!-- ITEM -->
+    <string name="info_item">All informations about this item:</string>
+
+</resources>
