@@ -53,7 +53,7 @@ public class ItemActivity extends AppCompatActivity {
         Log.d("ITEM -> ", item.getFirm());
 
         for(WarehouseItem wi : warehouseItem){
-            Log.d("WAREHOUSE ITEM -> ", wi.getWarehouseName()+" "+wi.getId_item());
+            Log.d("WAREHOUSE ITEMS-> ", wi.getWarehouseName()+" "+wi.getId_item());
         }
 
     }
