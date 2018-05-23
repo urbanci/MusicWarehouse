@@ -5,14 +5,12 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.urbankos.musicwarehouse.CategoryActivity;
-import com.example.urbankos.musicwarehouse.ItemActivity;
 import com.example.urbankos.musicwarehouse.R;
 import com.example.urbankos.musicwarehouse.objects.Warehouse;
 

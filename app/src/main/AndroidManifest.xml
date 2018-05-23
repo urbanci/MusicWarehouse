@@ -17,11 +17,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".CategoryActivity" />
-        <activity android:name=".ItemActivity" />
         <activity android:name=".InsertWarehouseActivity" />
         <activity android:name=".InsertItemActivity" />
         <activity android:name=".InsertWarehouseItemActivity" />
-        <activity android:name=".ItemListActivity"></activity>
+        <activity android:name=".ItemListActivity" />
+        <activity
+            android:name=".ItemActivity"
+            android:label="@string/title_activity_item"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

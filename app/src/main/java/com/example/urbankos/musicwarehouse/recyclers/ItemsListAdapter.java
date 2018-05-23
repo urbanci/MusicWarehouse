@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.urbankos.musicwarehouse.ItemActivity;
-import com.example.urbankos.musicwarehouse.ItemListActivity;
 import com.example.urbankos.musicwarehouse.R;
 import com.example.urbankos.musicwarehouse.objects.Item;
 

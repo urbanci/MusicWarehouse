@@ -6,24 +6,38 @@
 
     <!--INSERTS-->
 
-        <!--warehouse-->
-        <string name="insert_name">Name: </string>
-        <string name="insert_address">Address: </string>
-        <string name="insert_town">Town: </string>
-        <string name="insert_country">Country: </string>
-        <string name="insert_capacity">Capacity: </string>
+    <!--warehouse-->
+    <string name="insert_name">Name: </string>
+    <string name="insert_address">Address: </string>
+    <string name="insert_town">Town: </string>
+    <string name="insert_country">Country: </string>
+    <string name="insert_capacity">Capacity: </string>
 
-        <!--item-->
-        <string name="insert_firm">Country: </string>
-        <string name="insert_price">Price: </string>
-        <string name="insert_quantity">Quantity: </string>
-        <string name="insert_items_num">Items send here: </string>
+    <!--item-->
+    <string name="insert_firm">Firm: </string>
+    <string name="insert_price">Price: </string>
+    <string name="insert_quantity">Quantity: </string>
+    <string name="insert_items_num">Items send here: </string>
+    <string name="insert_category">Category: </string>
+    <string name="all_items">All items available: </string>
 
-        <!--warehouse_item-->
-        <string name="insert_warehouse_item">Arrange all the items available</string>
-        <string name="items_available">Items left: </string>
+    <!--warehouse_item-->
+    <string name="insert_warehouse_item">Arrange all the items available</string>
+    <string name="items_available">Items left: </string>
 
     <!-- ITEM -->
     <string name="info_item">All informations about this item:</string>
+    <string name="item_warehouse">Warehouse containing the item:</string>
+    <string name="title_activity_item">ItemActivity</string>
+    <string name="tab_item">Item INFO</string>
+    <string name="tab_item_warehouse">Item in Warehoues</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+
+    <string name="button_edit">Edit</string>
+    <string name="button_update">Update</string>
+
+
 
 </resources>
