@@ -29,7 +29,7 @@ public class ItemListActivity extends AppCompatActivity {
 
 //  RECYCLER VIEW
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private ItemsListAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
@@ -81,6 +81,8 @@ public class ItemListActivity extends AppCompatActivity {
 
         // specify an adapter (see also next example)
         mAdapter = new ItemsListAdapter(this, itemList);
+        mAdapter.notifyDataSetChanged();
         mRecyclerView.setAdapter(mAdapter);
     }
+
 }

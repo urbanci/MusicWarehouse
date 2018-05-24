@@ -78,13 +78,7 @@ public class ItemActivity extends AppCompatActivity {
         item = getItem();
         warehouseItem = getWarehouseItem();
 
-//        Log.d("ITEM -> ", item.getFirm());
-//
-//        for(WarehouseItem wi : warehouseItem){
-//            Log.d("WAREHOUSE ITEMS-> ", wi.getWarehouseName()+" "+wi.getId_item());
-//        }
-
-
+//      toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -166,7 +160,7 @@ public class ItemActivity extends AppCompatActivity {
 
                 case 1:
                     if(tab2 == null){
-                        tab2 = new TabWarehouse();
+                        tab2 = new TabWarehouse(warehouseItem);
                     }
                     return tab2;
 

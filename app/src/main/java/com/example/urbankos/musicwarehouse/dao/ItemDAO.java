@@ -139,8 +139,30 @@ public class ItemDAO {
             e.printStackTrace();
 
         }finally {
-            db.close();
             return item;
+        }
+    }
+
+    public int updateItem(Item item, String id_item){
+        getDatabase();
+        int success = -1;
+
+        try {
+            ContentValues cv = new ContentValues();
+            cv.put(DatabaseNames.Attributes.ITEM_CATEGORY, item.getCategory());
+            cv.put(DatabaseNames.Attributes.ITEM_QUANTITY, item.getQuantity());
+            cv.put(DatabaseNames.Attributes.ITEM_PRICE, item.getPrice());
+            cv.put(DatabaseNames.Attributes.ITEM_NAME, item.getName());
+            cv.put(DatabaseNames.Attributes.ITEM_FIRM, item.getFirm());
+
+            db.update(DatabaseNames.Entities.TABLE_ITEM, cv, DatabaseNames.Attributes.ITEM_ID+"="+id_item, null);
+            success = 1;
+
+        }catch (Exception e){
+            e.printStackTrace();
+
+        }finally {
+            return success;
         }
     }
 

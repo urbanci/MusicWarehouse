@@ -115,11 +115,7 @@ public class WarehouseItemAdapter extends RecyclerView.Adapter<WarehouseItemAdap
                         itemQ.setQuantity(Integer.valueOf(s.toString()));
                     }
 
-                    if(itemQ.getQuantityBefore() > itemQ.getQuantity()) {
-                        newValue = quantity + itemQ.getQuantityBefore() - itemQ.getQuantity();
-                    }else{
-                        newValue = quantity - itemQ.getQuantity() + itemQ.getQuantityBefore();
-                    }
+                    newValue = quantity - itemQ.getQuantity() + itemQ.getQuantityBefore();
 
                     quantityInterface.onQuantityChange(newValue);
                     warehouseItems.get(position).setQuantity(itemQ.getQuantity());

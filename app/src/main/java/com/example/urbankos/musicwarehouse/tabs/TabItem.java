@@ -1,6 +1,7 @@
 package com.example.urbankos.musicwarehouse.tabs;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
@@ -11,11 +12,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.urbankos.musicwarehouse.ItemListActivity;
 import com.example.urbankos.musicwarehouse.R;
 import com.example.urbankos.musicwarehouse.dao.ItemDAO;
 import com.example.urbankos.musicwarehouse.objects.Item;
+import com.example.urbankos.musicwarehouse.recyclers.ItemsListAdapter;
 import com.transitionseverywhere.TransitionManager;
+
+import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
 @SuppressLint("ValidFragment")
 public class TabItem extends Fragment{
@@ -77,6 +83,20 @@ public class TabItem extends Fragment{
         });
 
 //      Button update action
+        button_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getLayoutElements();
+
+                if(updateItem()){
+                    Toast.makeText(getActivity().getApplicationContext(), "Item was successfully updated.", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getActivity().getApplicationContext(), "ERROR", Toast.LENGTH_SHORT);
+                }
+
+                setClickableButtons();
+            }
+        });
 
         return rootView;
     }
@@ -124,13 +144,11 @@ public class TabItem extends Fragment{
 
             tab_item_category.setFocusable(true);
             tab_item_firm.setFocusable(true);
-            tab_item_quantity.setFocusable(true);
             tab_item_price.setFocusable(true);
             tab_item_name.setFocusable(true);
 
             tab_item_category.setFocusableInTouchMode(true);
             tab_item_firm.setFocusableInTouchMode(true);
-            tab_item_quantity.setFocusableInTouchMode(true);
             tab_item_price.setFocusableInTouchMode(true);
             tab_item_name.setFocusableInTouchMode(true);
 
@@ -142,6 +160,22 @@ public class TabItem extends Fragment{
             tab_item_quantity.setFocusable(false);
             tab_item_price.setFocusable(false);
             tab_item_name.setFocusable(false);
+        }
+    }
+
+    private boolean updateItem(){
+        Item item = new Item(
+                tab_item_name.getText().toString(),
+                tab_item_firm.getText().toString(),
+                Double.valueOf(tab_item_price.getText().toString()),
+                tab_item_category.getText().toString(),
+                Integer.valueOf(tab_item_quantity.getText().toString())
+        );
+
+        if(daoItem.updateItem(item, id_item)==1){
+            return true;
+        }else{
+            return false;
         }
     }
 }
