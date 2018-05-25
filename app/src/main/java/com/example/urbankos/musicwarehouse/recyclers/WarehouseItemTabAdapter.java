@@ -26,7 +26,8 @@ import java.util.ArrayList;
 public class WarehouseItemTabAdapter extends RecyclerView.Adapter<WarehouseItemTabAdapter.ViewHolder> {
     private Context activityContext;
     private int quantity;
-    private int countChange = 0;
+    private int countChange;
+    private int countChangeMain = 0;
     private ArrayList<ItemQuantity> itemQuantities = new ArrayList<>();
     private ArrayList<WarehouseItem> warehouseList = new ArrayList<>();
 
@@ -46,6 +47,11 @@ public class WarehouseItemTabAdapter extends RecyclerView.Adapter<WarehouseItemT
     public void updateWarehouseList (){
         for (WarehouseItem wi : warehouseList){
             wi.setQuantity(0);
+        }
+
+        for (ItemQuantity iq : itemQuantities){
+            iq.setQuantityBefore(0);
+            iq.setQuantity(0);
         }
     }
 
@@ -67,7 +73,9 @@ public class WarehouseItemTabAdapter extends RecyclerView.Adapter<WarehouseItemT
 
     @Override
     public void onBindViewHolder(@NonNull final WarehouseItemTabAdapter.ViewHolder holder, final int position) {
-
+        if(position == 0){
+            countChange = 0;
+        }
         holder.recycler_warehouse_item_name.setText(warehouseList.get(position).getWarehouseName());
         holder.recycler_warehouse_item_id.setText(String.valueOf(position+1)+". ");
 
@@ -116,8 +124,9 @@ public class WarehouseItemTabAdapter extends RecyclerView.Adapter<WarehouseItemT
         public void afterTextChanged(Editable s) {
             int newValue = 0;
             ItemQuantity itemQ = itemQuantities.get(getAdapterPosition());
+            Log.d("QUANTITY -> ", String.valueOf(quantity));
 
-            if(warehouseList.size()-1 == countChange){
+            if(warehouseList.size()-1 == countChangeMain){
                 quantity = 0;
             }else if(countChange >= warehouseList.size()) {
 
@@ -139,6 +148,7 @@ public class WarehouseItemTabAdapter extends RecyclerView.Adapter<WarehouseItemT
             }
 
             countChange++;
+            countChangeMain++;
         }
     }
 }

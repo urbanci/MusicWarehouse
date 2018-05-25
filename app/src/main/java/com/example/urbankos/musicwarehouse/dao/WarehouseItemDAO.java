@@ -107,4 +107,25 @@ public class WarehouseItemDAO {
         }
     }
 
+    public int updateWarehouseItem(ArrayList<WarehouseItem> warehouseItem){
+        getDatabase();
+        int success = -1;
+
+        try {
+            for (WarehouseItem wi: warehouseItem) {
+                ContentValues cv = new ContentValues();
+                cv.put(DatabaseNames.Attributes.WAREHOUSE_ITEM_QUANTITY, wi.getQuantity());
+
+                db.update(DatabaseNames.Entities.TABLE_ITEM_WAREHOUSE, cv, DatabaseNames.Attributes.WAREHOUSE_ITEM_ID + "=" + wi.getId(), null);
+                success = 1;
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+
+        }finally {
+            return success;
+        }
+    }
+
 }

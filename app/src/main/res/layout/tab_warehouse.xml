@@ -7,18 +7,18 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/tab_warehouse_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textAllCaps="true"
+        android:layout_marginTop="16dp"
         android:gravity="center"
-        android:textSize="18sp"
+        android:text="Edit quantity"
+        android:textAllCaps="true"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,7 @@
         android:text="@string/insert_warehouse_item"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        app:layout_constraintTop_toBottomOf="@+id/tab_warehouse_name" />
 
     <LinearLayout
         android:id="@+id/linearLayout4"
@@ -54,7 +54,7 @@
 
         <TextView
             android:id="@+id/textView14"
-            android:layout_width="match_parent"
+            android:layout_width="80sp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/all_items"
@@ -62,18 +62,18 @@
 
         <TextView
             android:id="@+id/tab_warehouse_quantity"
-            android:layout_width="match_parent"
+            android:layout_width="10sp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="TextView"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/recycler_new_quantity"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="50sp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="New Value" />
+            android:text="reset" />
 
     </LinearLayout>
 
@@ -91,7 +91,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_update_warehouse_item"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -99,7 +99,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:text="Button"
+        android:text="Update"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recycler_tab_warehouse" />

@@ -15,8 +15,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.urbankos.musicwarehouse.R;
+import com.example.urbankos.musicwarehouse.dao.WarehouseItemDAO;
 import com.example.urbankos.musicwarehouse.objects.ItemQuantity;
 import com.example.urbankos.musicwarehouse.objects.WarehouseItem;
 import com.example.urbankos.musicwarehouse.recyclers.ItemsListAdapter;
@@ -37,6 +39,9 @@ public class TabWarehouse extends Fragment implements WarehouseItemTabAdapter.Qu
 //  ROOTVIEW
     private View rootView;
 
+//  DAOS
+    private WarehouseItemDAO daoWarehouseItem;
+
 //  RECYCLER VIEW
     private RecyclerView mRecyclerView;
     private WarehouseItemTabAdapter mAdapter;
@@ -47,6 +52,7 @@ public class TabWarehouse extends Fragment implements WarehouseItemTabAdapter.Qu
 
 //  BUTTONS
     private Button recycler_new_quantity;
+    private Button button_update_warehouse_item;
 
     public TabWarehouse(ArrayList<WarehouseItem> warehouseItem) {
         this.warehouseItems = warehouseItem;
@@ -57,6 +63,10 @@ public class TabWarehouse extends Fragment implements WarehouseItemTabAdapter.Qu
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.tab_warehouse, container, false);
+//      Dao
+        if(daoWarehouseItem == null){
+            daoWarehouseItem = new WarehouseItemDAO(getActivity());
+        }
 
 //      Get & Set layout elements
         getLayoutElements();
@@ -79,6 +89,7 @@ public class TabWarehouse extends Fragment implements WarehouseItemTabAdapter.Qu
                     public void onClick(DialogInterface dialog, int which) {
                         Log.d("onClickDIALOG -> ", "ses");
                         quantity = Integer.valueOf(set_new_quantity.getText().toString());
+                        tab_warehouse_quantity.setText(String.valueOf(quantity));
                         mAdapter.updateQuantity(quantity);
                         mAdapter.updateWarehouseList();
                         mAdapter.notifyDataSetChanged();
@@ -90,6 +101,19 @@ public class TabWarehouse extends Fragment implements WarehouseItemTabAdapter.Qu
             }
         });
 
+        button_update_warehouse_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(updateWarehouseItem() != 1){
+                    Toast.makeText(getActivity(), "ERROR", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getActivity(), "Item quantities successfully updated", Toast.LENGTH_SHORT).show();
+                    getActivity().finish();
+                    getActivity().startActivity(getActivity().getIntent());
+                }
+            }
+        });
+
         return rootView;
     }
 
@@ -98,6 +122,7 @@ public class TabWarehouse extends Fragment implements WarehouseItemTabAdapter.Qu
     private void getLayoutElements(){
         tab_warehouse_quantity = rootView.findViewById(R.id.tab_warehouse_quantity);
         recycler_new_quantity = rootView.findViewById(R.id.recycler_new_quantity);
+        button_update_warehouse_item = rootView.findViewById(R.id.button_update_warehouse_item);
     }
 
     private void setLayoutElements(){
@@ -126,6 +151,12 @@ public class TabWarehouse extends Fragment implements WarehouseItemTabAdapter.Qu
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    private int updateWarehouseItem(){
+        return daoWarehouseItem.updateWarehouseItem(warehouseItems);
+    }
+
+//  INTERFACE --------------------------------------------------------------------------------------
+
     @Override
     public void onQuantityChange(int newValue) {
         tab_warehouse_quantity.setText(String.valueOf(newValue));
@@ -135,8 +166,6 @@ public class TabWarehouse extends Fragment implements WarehouseItemTabAdapter.Qu
 
     @Override
     public void sendAllData(ArrayList<WarehouseItem> warehouseList, int position) {
-        for (WarehouseItem warehouseItem: warehouseList){
-            Log.d("ListTabHouse: -> ", warehouseItem.getQuantity()+" "+warehouseItem.getId_item()+" "+warehouseItem.getId_warehouse());
-        }
+        warehouseItems = warehouseList;
     }
 }
