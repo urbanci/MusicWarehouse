@@ -165,6 +165,7 @@ public class TabItem extends Fragment{
 
     private boolean updateItem(){
         Item item = new Item(
+                Integer.valueOf(id_item),
                 tab_item_name.getText().toString(),
                 tab_item_firm.getText().toString(),
                 Double.valueOf(tab_item_price.getText().toString()),
@@ -172,7 +173,7 @@ public class TabItem extends Fragment{
                 Integer.valueOf(tab_item_quantity.getText().toString())
         );
 
-        if(daoItem.updateItem(item, id_item)==1){
+        if(daoItem.updateItem(item)==1){
             return true;
         }else{
             return false;

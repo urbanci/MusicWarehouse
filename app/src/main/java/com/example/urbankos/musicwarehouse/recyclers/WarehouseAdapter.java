@@ -21,6 +21,10 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.View
     private ArrayList<Warehouse> warehouseList;
     private Context mainActivityContext;
 
+    public void updateList(ArrayList<Warehouse> list){
+        warehouseList = list;
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         private ConstraintLayout warehouse_view_holder;
@@ -39,8 +43,7 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.View
         }
     }
 
-    public WarehouseAdapter(Context context, ArrayList<Warehouse> list) {
-        warehouseList = list;
+    public WarehouseAdapter(Context context) {
         mainActivityContext = context;
     }
 
@@ -71,7 +74,11 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.View
 
     @Override
     public int getItemCount() {
-        return warehouseList.size();
+        if(warehouseList != null) {
+            return warehouseList.size();
+        }else{
+            return 0;
+        }
     }
 
 }

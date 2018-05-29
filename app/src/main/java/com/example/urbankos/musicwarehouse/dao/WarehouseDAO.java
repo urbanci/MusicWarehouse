@@ -10,29 +10,24 @@ import android.util.Log;
 import com.example.urbankos.musicwarehouse.database_sqlite.DatabaseHelper;
 import com.example.urbankos.musicwarehouse.database_sqlite.DatabaseNames;
 import com.example.urbankos.musicwarehouse.objects.Warehouse;
+import com.example.urbankos.musicwarehouse.objects.WarehouseItem;
 
 import java.util.ArrayList;
 
-public class WarehouseDAO {
+public class WarehouseDAO extends MainDAO{
 
-    private DatabaseHelper databaseHelper = null;
     private SQLiteDatabase db = null;
 
     private Warehouse warehouse = null;
     private ArrayList<Warehouse> warehousesList = new ArrayList<>();
 
     public WarehouseDAO(Context context){
-        databaseHelper = new DatabaseHelper(context);
+        super(context);
     }
 
-    private void getDatabase(){
-        if(db == null){
-            db = databaseHelper.getWritableDatabase();
-        }
-    }
 
     public boolean insertWarehouse(Warehouse warehouse){
-        getDatabase();
+        db = getDatabase();
         ContentValues contentValues = new ContentValues();
         long result = 0;
 
@@ -49,7 +44,6 @@ public class WarehouseDAO {
             return false;
 
         }finally {
-            db.close();
 
             if(result == -1){
                 return false;
@@ -60,7 +54,7 @@ public class WarehouseDAO {
     }
 
     public ArrayList<Warehouse> getAllWarehousesRecycler(){
-        getDatabase();
+        db = getDatabase();
 
         try{
             Cursor res = db.rawQuery("SELECT "+DatabaseNames.Attributes.WAREHOUSE_ID+", "
@@ -83,13 +77,36 @@ public class WarehouseDAO {
 
         }catch (Exception e){
             e.printStackTrace();
+            warehousesList.clear();
 
         }finally {
-            db.close();
             return warehousesList;
         }
+    }
+
+    public int updateWarehouse(Warehouse warehouse){
+        db = getDatabase();
+        int success = -1;
+
+        try {
+
+            ContentValues cv = new ContentValues();
+            cv.put(DatabaseNames.Attributes.WAREHOUSE_ADDRESS, warehouse.getAddress());
+            cv.put(DatabaseNames.Attributes.WAREHOUSE_CAPACITY, warehouse.getCapacity());
+            cv.put(DatabaseNames.Attributes.WAREHOUSE_NAME, warehouse.getName());
+            cv.put(DatabaseNames.Attributes.WAREHOUSE_COUNTRY, warehouse.getCapacity());
+            cv.put(DatabaseNames.Attributes.WAREHOUSE_TOWN, warehouse.getTown());
+
+            db.update(DatabaseNames.Entities.TABLE_WAREHOUSE, cv, DatabaseNames.Attributes.WAREHOUSE_ID+"="+String.valueOf(warehouse.getId()), null);
+            success = 1;
 
 
+        }catch (Exception e){
+            e.printStackTrace();
+
+        }finally {
+            return success;
+        }
     }
 
 }

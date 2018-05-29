@@ -1,11 +1,26 @@
 package com.example.urbankos.musicwarehouse.objects;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Item {
+    @SerializedName("id")
+    @Expose
     private int id;
+    @SerializedName("name")
+    @Expose
     private String name;
+    @SerializedName("firm")
+    @Expose
     private String firm;
+    @SerializedName("price")
+    @Expose
     private double price;
+    @SerializedName("category")
+    @Expose
     private String category;
+    @SerializedName("quantity")
+    @Expose
     private int quantity;
 
     public Item(int id, String name, String firm, double price, String category, int quantity) {

@@ -11,27 +11,22 @@ import com.example.urbankos.musicwarehouse.database_sqlite.DatabaseNames;
 import com.example.urbankos.musicwarehouse.objects.WarehouseItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class WarehouseItemDAO {
+public class WarehouseItemDAO extends MainDAO{
     private DatabaseHelper databaseHelper = null;
     private SQLiteDatabase db = null;
     private ArrayList<WarehouseItem> warehouseItems = new ArrayList<>();
 
 
     public WarehouseItemDAO(Context context) {
-        databaseHelper = new DatabaseHelper(context);
-    }
-
-    private void getDatabase(){
-        if(db == null){
-            db = databaseHelper.getWritableDatabase();
-        }
+        super(context);
     }
 
     public boolean insertWarehouseItem(ArrayList<WarehouseItem> warehouseItems, int id){
-        getDatabase();
+        db = getDatabase();
         ContentValues contentValues = null;
-        long result = 0;
+        long result = -1;
 
         try {
             for (WarehouseItem item : warehouseItems) {
@@ -57,8 +52,35 @@ public class WarehouseItemDAO {
 
     }
 
+    public boolean insertWarehouseItemFull(WarehouseItem warehouseItems){
+        db = getDatabase();
+        ContentValues contentValues = null;
+        long result = 0;
+
+        try {
+            contentValues = new ContentValues();
+
+            contentValues.put(DatabaseNames.Attributes.WAREHOUSE_ITEM_FK_ITEM, warehouseItems.getId());
+            contentValues.put(DatabaseNames.Attributes.WAREHOUSE_ITEM_FK_WAREHOUSE, warehouseItems.getId_warehouse());
+            contentValues.put(DatabaseNames.Attributes.WAREHOUSE_ITEM_QUANTITY, warehouseItems.getQuantity());
+
+            result = db.insertOrThrow(DatabaseNames.Entities.TABLE_ITEM_WAREHOUSE, null, contentValues);
+
+        }catch (Exception e){
+            e.printStackTrace();
+
+        }finally {
+            if(result == -1){
+                return false;
+            }else{
+                return true;
+            }
+        }
+
+    }
+
     public ArrayList<WarehouseItem> getQuantityesInWarehouses(String id_item){
-        getDatabase();
+        db = getDatabase();
 
         try {
             Cursor res = db.rawQuery("SELECT * FROM "+DatabaseNames.Entities.TABLE_ITEM_WAREHOUSE
@@ -79,6 +101,7 @@ public class WarehouseItemDAO {
             }
         }catch (Exception e){
             e.printStackTrace();
+            warehouseItems.clear();
 
         }finally {
             db.close();
@@ -108,7 +131,7 @@ public class WarehouseItemDAO {
     }
 
     public int updateWarehouseItem(ArrayList<WarehouseItem> warehouseItem){
-        getDatabase();
+        db = getDatabase();
         int success = -1;
 
         try {
@@ -119,6 +142,52 @@ public class WarehouseItemDAO {
                 db.update(DatabaseNames.Entities.TABLE_ITEM_WAREHOUSE, cv, DatabaseNames.Attributes.WAREHOUSE_ITEM_ID + "=" + wi.getId(), null);
                 success = 1;
             }
+
+        }catch (Exception e){
+            e.printStackTrace();
+
+        }finally {
+            return success;
+        }
+    }
+
+    public ArrayList<WarehouseItem> getWarehouseItems(){
+        db = getDatabase();
+        ArrayList<WarehouseItem> items = new ArrayList<>();
+
+        try {
+            Cursor res = db.rawQuery("SELECT * FROM "+DatabaseNames.Entities.TABLE_ITEM_WAREHOUSE+";", null);
+
+            if (res.getCount() != 0) {
+                while (res.moveToNext()) {
+                    items.add(new WarehouseItem(
+                            res.getInt(res.getColumnIndex(DatabaseNames.Attributes.WAREHOUSE_ITEM_ID)),
+                            res.getInt(res.getColumnIndex(DatabaseNames.Attributes.WAREHOUSE_ITEM_FK_ITEM)),
+                            res.getInt(res.getColumnIndex(DatabaseNames.Attributes.WAREHOUSE_ITEM_FK_WAREHOUSE)),
+                            res.getInt(res.getColumnIndex(DatabaseNames.Attributes.WAREHOUSE_ITEM_QUANTITY))));
+
+                }
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+
+        }finally {
+            return items;
+        }
+    }
+
+    public int updateWarehouseItemFull(WarehouseItem warehouseItem){
+        db = getDatabase();
+        int success = -1;
+
+        try {
+            ContentValues cv = new ContentValues();
+            cv.put(DatabaseNames.Attributes.WAREHOUSE_ITEM_QUANTITY, warehouseItem.getQuantity());
+
+            db.update(DatabaseNames.Entities.TABLE_ITEM_WAREHOUSE, cv, DatabaseNames.Attributes.WAREHOUSE_ITEM_ID + "=" + warehouseItem.getId(), null);
+            success = 1;
+
 
         }catch (Exception e){
             e.printStackTrace();

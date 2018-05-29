@@ -12,25 +12,19 @@ import com.example.urbankos.musicwarehouse.objects.Item;
 
 import java.util.ArrayList;
 
-public class ItemDAO {
+public class ItemDAO extends MainDAO {
 
-    private DatabaseHelper databaseHelper = null;
-    private SQLiteDatabase db = null;
     private ArrayList<String> categoryList = new ArrayList<>();
     private ArrayList<Item> itemsList = new ArrayList<>();
+    private SQLiteDatabase db;
 
     public ItemDAO(Context context){
-        databaseHelper = new DatabaseHelper(context);
+        super(context);
     }
 
-    private void getDatabase(){
-        if(db == null){
-            db = databaseHelper.getWritableDatabase();
-        }
-    }
 
     public int insertItem(Item item){
-        getDatabase();
+        db = getDatabase();
         long result = 0;
 
         ContentValues contentValues = new ContentValues();
@@ -59,7 +53,7 @@ public class ItemDAO {
     }
 
     public ArrayList<String> getCategoriesOfItemsInWarehouse(String id_warehouse){
-        getDatabase();
+        db = getDatabase();
 
         try {
             Cursor res = db.rawQuery("SELECT DISTINCT item." + DatabaseNames.Attributes.ITEM_CATEGORY
@@ -76,6 +70,7 @@ public class ItemDAO {
             }
         }catch (Exception e){
             e.printStackTrace();
+            itemsList.clear();
         }finally {
             db.close();
             return categoryList;
@@ -84,7 +79,7 @@ public class ItemDAO {
     }
 
     public ArrayList<Item> getItemNameFirm(String category, String id_warehouse){
-        getDatabase();
+        db = getDatabase();
 
         try {
             Cursor res = db.rawQuery("SELECT item." + DatabaseNames.Attributes.ITEM_ID
@@ -107,6 +102,7 @@ public class ItemDAO {
             }
         }catch (Exception e){
             e.printStackTrace();
+            itemsList.clear();
         }finally {
             db.close();
             return itemsList;
@@ -115,7 +111,7 @@ public class ItemDAO {
     }
 
     public Item getItem(String id_item){
-        getDatabase();
+        db = getDatabase();
         Item item = null;
 
         try {
@@ -143,8 +139,8 @@ public class ItemDAO {
         }
     }
 
-    public int updateItem(Item item, String id_item){
-        getDatabase();
+    public int updateItem(Item item){
+        db = getDatabase();
         int success = -1;
 
         try {
@@ -155,7 +151,7 @@ public class ItemDAO {
             cv.put(DatabaseNames.Attributes.ITEM_NAME, item.getName());
             cv.put(DatabaseNames.Attributes.ITEM_FIRM, item.getFirm());
 
-            db.update(DatabaseNames.Entities.TABLE_ITEM, cv, DatabaseNames.Attributes.ITEM_ID+"="+id_item, null);
+            db.update(DatabaseNames.Entities.TABLE_ITEM, cv, DatabaseNames.Attributes.ITEM_ID+"="+String.valueOf(item.getId()), null);
             success = 1;
 
         }catch (Exception e){
@@ -163,6 +159,35 @@ public class ItemDAO {
 
         }finally {
             return success;
+        }
+    }
+
+    public ArrayList<Item> getItems(){
+        db = getDatabase();
+        Item item = null;
+        ArrayList<Item> items = new ArrayList<>();
+
+        try {
+            Cursor res = db.rawQuery("SELECT * FROM "+DatabaseNames.Entities.TABLE_ITEM+";", null);
+
+            if (res.getCount() != 0) {
+                while (res.moveToNext()) {
+                    items.add(new Item(Integer.valueOf(res.getString(0)),
+                            res.getString(1),
+                            res.getString(2),
+                            Double.valueOf(res.getString(4)),
+                            res.getString(3),
+                            Integer.valueOf(res.getString(5)
+                            )
+                    ));
+                }
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+
+        }finally {
+            return items;
         }
     }
 
